@@ -3,11 +3,11 @@
 	$start = $_POST['start'];
 	$end = $_POST['end'];
 	$d = array();
+	$mark = array();
 	$mass = explode(";", $str);
 	$unic = array();
 	$dost = array();
 	$leng = 0;
-	$h = 0;
 	//парсинг строки по ","
 	//выявление уникальных символов
 	foreach($mass as $key => $value){
@@ -40,24 +40,21 @@
 		$dost[$mass[$key][0]][$mass[$key][1]] = $mass[$key][2] * 1;
 	}
 	
-	$i = 0;
-	$otr = -1;
 	
-	foreach($mass as $key => $value){
-
-			if($mass[$key][0] == $start) {
-				$d[$i] = $d[$i] + $mass[$key][2]; 
-				foreach($mass as $k => $value){
-					if($mass[$key][1] == $mass[$k][0] && $mass[$key][1] == $end ) {
-						$d[$i] = $d[$i] + $mass[$k][2]; 
-					} 
-				}
-				$i = $i + 1;
-			}
-		
+	for ($i = 1; $i < ($leng*$leng - 1); $i++)
+		$d[$i] = 2000000000;
+	$d[0] = 0;
+	
+	for ($i = 1; $i < ($leng*$leng - 1); $i++){
+		for ($j = 1; $j < ($leng*$leng - 1); $j++){
+			if ($d[$dost[$j].$second] > $d[$dost[$j].$first] + $dost[$j].$value)
+				$d[$dost[$j].$second] = $d[$dost[$j].$first] + $e[$j].$value;
+			if ($d[$dost[$j].$first] > $d[$dost[$j].$second] + $dost[$j].$value)
+				$d[$dost[$j].$first] = $d[$dost[$j].$second] + $dost[j].$value;
+		}	
 	}
-	
 
+	
 	// отправка результата
 	header('Content-type: application/json');
 	echo json_encode($d);
